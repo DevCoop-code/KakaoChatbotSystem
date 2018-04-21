@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.zerock.mapper.ChatLogMapper">
+	<insert id="create">
+	insert into talklog(request, response, user) values(#{request}, #{response}, #{user})
+	</insert>
+	
+	<select id="listAll" resultType="ChatLogVO">
+	<![CDATA[
+	select
+		bno, request, response, user, regdate
+	from
+		talklog
+	where bno > 0
+	order by bno desc
+	]]>
+	</select>
+	
+	<select id="listPage" resultType="ChatLogVO">
+	<![CDATA[
+	select
+		bno, request, response, user, regdate
+	from
+		talklog
+	where bno > 0
+	order by bno desc
+	limit #{page}, 10
+	]]>
+	</select>
+	
+	<select id="countPaging" resultType="int">
+	<![CDATA[
+	select
+		count(bno)
+	from
+		talklog
+	]]>
+	</select>
+	
+	<select id="responsechat" resultType="String">
+	select
+		response
+	from
+		talklog
+	where request = #{request}
+	</select>
+</mapper>

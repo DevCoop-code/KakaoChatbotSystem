@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.zerock.mapper.BotSentenceMapper">
+	<insert id="create">
+	insert into botsentence(target, next) values(#{target},#{next})
+	</insert>
+	
+	<select id="check" resultType="MorphismVO">
+	select
+		target, next, frequent
+	from
+		botsentence
+	where target = #{target} and next = #{next}
+	</select>
+	
+	<update id="freqincrease">
+	update botsentence set frequent = frequent + 1 
+	where target = #{target} and next = #{next}
+	</update>
+	
+	<select id="getwords" resultType="MorphismVO">
+	select
+		target, next
+	from
+		botsentence
+	where target = #{target}
+	order by frequent desc
+	</select>
+	
+	<select id="listAll" resultType="MorphismVO">
+	select
+		target, next, frequent
+	from
+		botsentence
+	</select>
+	
+	<select id="listPage" resultType="MorphismVO">
+	<![CDATA[
+	select
+		target, next, frequent
+	from
+		botsentence
+	limit #{page}, 10
+	]]>
+	</select>
+	
+	<select id="countPaging" resultType="int">
+	<![CDATA[
+	select
+		count(target)
+	from
+		botsentence
+	]]>
+	</select>
+</mapper>

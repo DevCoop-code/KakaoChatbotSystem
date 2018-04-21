@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.zerock.mapper.InsultMapper">
+	<insert id="create">
+		insert into insulting_words_set(insult_word) values(#{insultword})
+	</insert>
+	
+	<delete id="delete">
+		delete from insulting_words_set where bno = #{bno}
+	</delete>
+	
+	<select id="listAll" resultType="InsultWordVO">
+		<![CDATA[
+		select
+			bno, insult_word
+		from insulting_words_set
+		where bno > 0
+		order by bno desc
+		]]>
+	</select>
+</mapper>
